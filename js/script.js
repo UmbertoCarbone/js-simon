@@ -14,7 +14,7 @@ const messageEl = document.querySelector("#message")
 
 
 //Da lì parte un timer di 30 secondi
-let v = 5;
+let v = 2;
 const countdownInterval = setInterval(() => {
     if (v == 0) {
         // con questo svuoto il testo dei numeri
@@ -51,7 +51,7 @@ numbersEl.innerText = numeriCasuali; //.join(',');
 
 
 
-answers_formEl.addEventListener('submit', function (e) {
+answers_formEl.addEventListener('submit', function (e) { //event
     console.log(e);
 
     e.preventDefault();
@@ -62,19 +62,33 @@ answers_formEl.addEventListener('submit', function (e) {
     let userInputs = document.querySelectorAll('#answers-form .form-control');
 
 
-    let userNumbers = []
+    let userNumbers = [];
+
+
+
     for (let i = 0; i < 5; i++) {
-        console.log(userInputs[i].value);
-        userNumbers.push(userInputs[i].value)
-        console.log(userNumbers)
+        const numero = parseInt(userInputs[i].value); // Lo fai una volta sola
+        console.log(numero);
 
-        console.log(numeriCasuali.includes(parseInt(userInputs[i].value)));
+        userNumbers.push(numero); // Push direttamente il numero
+        console.log(userNumbers);
 
-        if (numeriCasuali.includes(parseInt(userInputs[i].value))) {
-            console.log("Si, lo include", userInputs[i].value)
+        console.log(numeriCasuali.includes(numero)); // Usa la variabile
+
+        if (numeriCasuali.includes(numero)) {
+            console.log("esatto!", numero);
+        }
+        else {
+            console.log("Sbagliato")
         }
     }
+    // Filtra i numeri indovinati: quelli che sono sia nei numeri generati che in quelli inseriti
+    const numeriIndovinati = userNumbers.filter(numero => numeriCasuali.includes(numero));
 
+    // Mostra il messaggio finale all’utente
+    alert(`Hai indovinato ${numeriIndovinati.length} numero/i: 
+  ${numeriIndovinati.join(", ")}
+`);
 });
 
 
